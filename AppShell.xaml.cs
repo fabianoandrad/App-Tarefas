@@ -1,4 +1,4 @@
-﻿namespace tarefas;
+﻿namespace Tarefas;
 
 public partial class AppShell : Shell
 {

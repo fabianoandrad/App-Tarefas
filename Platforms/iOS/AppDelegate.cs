@@ -1,6 +1,6 @@
 ﻿using Foundation;
 
-namespace tarefas;
+namespace Tarefas;
 
 [Register("AppDelegate")]
 public class AppDelegate : MauiUIApplicationDelegate

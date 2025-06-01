@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Runtime;
 
-namespace tarefas;
+namespace Tarefas;
 
 [Application]
 public class MainApplication : MauiApplication
