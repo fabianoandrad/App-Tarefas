@@ -1,9 +1,11 @@
+using SQLite;
 using Tarefas.Enums;
 
 namespace Tarefas.Models;
 
 public class Tarefa
 {
+    [PrimaryKey, AutoIncrement]
     public int Id { get; set; }
     public string Titulo { get; set; }
     public string Descricao { get; set; }
