@@ -21,6 +21,12 @@ public partial class MainPage : ContentPage
 		CarregarTarefas();
 	}
 
+	protected override void OnAppearing()
+	{
+		base.OnAppearing();
+		CarregarTarefas();
+    }
+
 	private async Task NavigateToDetails(Tarefa tarefa)
 	{
 		await Navigation.PushAsync(new TaskDetailsPage(tarefa));

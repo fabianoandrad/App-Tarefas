@@ -17,6 +17,11 @@ namespace Tarefas.Servicos
             return _database.InsertAsync(item);
         }
 
+        public Task<int> EditAsync(T item)
+        {
+            return _database.UpdateAsync(item);
+        }
+
         public Task<List<T>> TodosAsync()
         {
             return _database.Table<T>().ToListAsync();
