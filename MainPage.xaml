@@ -18,18 +18,35 @@
                 Style="{StaticResource Headline}"
                 SemanticProperties.HeadingLevel="Level1" />
 
-            <Label
-                Text="Meu primeiro app com &#10;.NET Multi-platform App UI"
-                Style="{StaticResource SubHeadline}"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
+            <StackLayout>
+                <Grid Padding="5" BackgroundColor="LightBlue" RowDefinitions="Auto" ColumnDefinitions="0.1*, 0.3*, 0.3*, 0.2*, 0.2*">
+                    <Label Text="#" FontAttributes="Bold" Grid.Column="0" />
+                    <Label Text="Titulo" FontAttributes="Bold" Grid.Column="1" />
+                    <Label Text="Usuário" FontAttributes="Bold" Grid.Column="2" />
+                    <Label Text="Status" FontAttributes="Bold" Grid.Column="3" />
+                    <Label Text="Ver" FontAttributes="Bold" Grid.Column="4" />
+                </Grid>
 
-            <Button
-                x:Name="CounterBtn"
-                Text="Click me" 
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Fill" />
+                <CollectionView x:Name="TarefasCollectionTable">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Padding="5" RowDefinitions="Auto" ColumnDefinitions="0.1*, 0.3*, 0.3*, 0.2*, 0.2*">
+                                <Label Text="{Binding Id}" Grid.Column="0" />
+                                <Label Text="{Binding Titulo}" Grid.Column="1" />
+                                <Label Text="{Binding NomeUsuario}" Grid.Column="2" />
+                                <Label Text="{Binding Status}" Grid.Column="3" />
+                                <Button Text="ver"
+                                    Command="{Binding Path=BindingContext.AlertCommand, Source={x:Reference Name=TarefasCollectionTable}}"
+                                    CommandParameter="{Binding .}"
+                                    Grid.Column="4">
+                                    
+                                </Button>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+            </StackLayout>
         </VerticalStackLayout>
     </ScrollView>
 
