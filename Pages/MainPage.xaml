@@ -26,7 +26,7 @@
                     <Label Text="Titulo" FontAttributes="Bold" Grid.Column="1" />
                     <Label Text="Usuário" FontAttributes="Bold" Grid.Column="2" />
                     <Label Text="Status" FontAttributes="Bold" Grid.Column="3" />
-                    <Label Text="Ver" FontAttributes="Bold" Grid.Column="4" />
+                    <Label Text="Ações" FontAttributes="Bold" Grid.Column="4" />
                 </Grid>
 
                 <CollectionView x:Name="TarefasCollectionTable">
@@ -37,12 +37,26 @@
                                 <Label Text="{Binding Titulo}" Grid.Column="1" />
                                 <Label Text="{Binding NomeUsuario}" Grid.Column="2" />
                                 <Label Text="{Binding Status}" Grid.Column="3" />
-                                <Button Text="ver"
-                                    Command="{Binding Path=BindingContext.NavigateToDetailsCommand, Source={x:Reference Name=TarefasCollectionTable}}"
-                                    CommandParameter="{Binding .}"
-                                    Grid.Column="4">
-                                    
-                                </Button>
+
+                                <Grid Grid.Column="4">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Button Text="ver"
+                                        Command="{Binding Path=BindingContext.NavigateToDetailsCommand, Source={x:Reference Name=TarefasCollectionTable}}"
+                                        CommandParameter="{Binding .}"
+                                        Grid.Row="0">
+                                    </Button>
+
+                                    <Button Text="Excluir"
+                                        BackgroundColor="Red"
+                                        TextColor="white"
+                                        Command="{Binding Path=BindingContext.DeleteCommand, Source={x:Reference Name=TarefasCollectionTable}}"
+                                        CommandParameter="{Binding .}"
+                                        Grid.Row="1">
+                                    </Button>
+                                </Grid>
                             </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>

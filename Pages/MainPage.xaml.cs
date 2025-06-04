@@ -9,6 +9,7 @@ public partial class MainPage : ContentPage
 {
 	DatabaseServico<Tarefa> _tarefaServico;
 	public ICommand NavigateToDetailsCommand { get; private set; }
+	public ICommand DeleteCommand { get; private set; }
 
 	public MainPage()
 	{
@@ -16,6 +17,7 @@ public partial class MainPage : ContentPage
 		_tarefaServico = new DatabaseServico<Tarefa>(Db.DB_PATH);
 
 		NavigateToDetailsCommand = new Command<Tarefa>(async (tarefa) => await NavigateToDetails(tarefa));
+		DeleteCommand = new Command<Tarefa>(ExecuteDeleteCommand);
 		TarefasCollectionTable.BindingContext = this;
 
 		CarregarTarefas();
@@ -26,6 +28,16 @@ public partial class MainPage : ContentPage
 		base.OnAppearing();
 		CarregarTarefas();
     }
+
+	private async void ExecuteDeleteCommand(Tarefa tarefa)
+	{
+		bool confirm = await DisplayAlert("Confirmação", "Deseja excuir esta tarefa?", "Sim", "Não");
+		if (confirm)
+		{
+			await _tarefaServico.DeleteAsync(tarefa);
+			CarregarTarefas();
+		}
+	}
 
 	private async Task NavigateToDetails(Tarefa tarefa)
 	{

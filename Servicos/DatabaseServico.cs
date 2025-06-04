@@ -22,6 +22,11 @@ namespace Tarefas.Servicos
             return _database.UpdateAsync(item);
         }
 
+        public Task<int> DeleteAsync(T item)
+        {
+            return _database.DeleteAsync(item);
+        }
+
         public Task<List<T>> TodosAsync()
         {
             return _database.Table<T>().ToListAsync();
