@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Tarefas.Pages.TaskDetailsPage">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30,0"
+            Spacing="25">
+
+            <Label
+                Text="Detalhes da tarefa"
+                Style="{StaticResource Headline}"
+                SemanticProperties.HeadingLevel="Level1" />
+
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Titulo:" FontAttributes="Bold" />
+                <Label Text="{Binding Tarefa.Titulo}" Margin="10,0,0,0"/>
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Descrição:" FontAttributes="Bold" />
+                <Label Text="{Binding Tarefa.Descricao}" Margin="10,0,0,0"/>
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Usuário:" FontAttributes="Bold" />
+                <Label Text="{Binding Tarefa.NomeUsuario}" Margin="10,0,0,0"/>
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Criado em:" FontAttributes="Bold" />
+                <Label Text="{Binding Tarefa.DataCriacao}" Margin="10,0,0,0"/>
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Atualizado em:" FontAttributes="Bold" />
+                <Label Text="{Binding Tarefa.DataAtualizacao}" Margin="10,0,0,0"/>
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Status:" FontAttributes="Bold" />
+                <Label Text="{Binding Tarefa.Status}" Margin="10,0,0,0"/>
+            </StackLayout>
+            
+            <Button Text="Voltar" Clicked="GoBackClicked" />
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
