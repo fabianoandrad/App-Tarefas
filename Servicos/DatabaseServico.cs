@@ -32,6 +32,11 @@ namespace Tarefas.Servicos
             return _database.Table<T>().ToListAsync();
         }
 
+        public AsyncTableQuery<T> Query()
+        {
+            return _database.Table<T>();
+        }
+
         public Task<int> QuantidadeAsync()
         {
             return _database.Table<T>().CountAsync();

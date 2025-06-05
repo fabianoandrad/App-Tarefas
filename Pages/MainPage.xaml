@@ -3,22 +3,112 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Tarefas.Pages.MainPage">
 
-    <ScrollView>
-        <VerticalStackLayout
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="FrameCardStyle" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="LightGray" />
+                <Setter Property="Padding" Value="10" />
+                <Setter Property="CornerRadius" Value="10" />
+                <Setter Property="HasShadow" Value="True" />
+                <Setter Property="WidthRequest" Value="200" />
+            </Style>
+
+            <Style x:Key="LabelFrameCardStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="Black"/>
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="FontSize" Value="Large" />
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+            </Style>
+
+            <Style x:Key="CollectionViewFrameStyle" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="White" />
+                <Setter Property="Padding" Value="10" />
+                <Setter Property="Padding" Value="10" />
+                <Setter Property="CornerRadius" Value="10" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="HasShadow" Value="True" />
+            </Style>
+
+            <Style x:Key="CollectionViewFrameLabelStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="Black"/>
+                <Setter Property="Padding" Value="5" />
+                <Setter Property="WidthRequest" Value="200" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="LineBreakMode" Value="TailTruncation" />
+            </Style>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ScrollView Orientation="Horizontal">
+        <HorizontalStackLayout Padding="10">
+            <VerticalStackLayout>
+                <Frame Style="{StaticResource FrameCardStyle}">
+                    <StackLayout>
+                        <Label Text="Backlog" Style="{StaticResource LabelFrameCardStyle}"/>
+                        <CollectionView x:Name="CardBacklog">
+                            <!-- Template para itens -->
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Frame Style="{StaticResource CollectionViewFrameStyle}">
+                                        <StackLayout HorizontalOptions="FillAndExpand">
+                                            <Label Text="{Binding Titulo}" Style="{StaticResource CollectionViewFrameLabelStyle}"/>
+                                        </StackLayout>
+                                    </Frame>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </StackLayout>
+                </Frame>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout>
+                <Frame Style="{StaticResource FrameCardStyle}">
+                    <StackLayout>
+                        <Label Text="Analise" Style="{StaticResource LabelFrameCardStyle}"/>
+                        <CollectionView x:Name="CardAnalise">
+                            <!-- Template para itens -->
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Frame Style="{StaticResource CollectionViewFrameStyle}">
+                                        <StackLayout HorizontalOptions="FillAndExpand">
+                                            <Label Text="{Binding Titulo}" Style="{StaticResource CollectionViewFrameLabelStyle}"/>
+                                        </StackLayout>
+                                    </Frame>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate> 
+                        </CollectionView>
+                    </StackLayout>
+                </Frame>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout>
+                <Frame Style="{StaticResource FrameCardStyle}">
+                    <StackLayout>
+                        <Label Text="Para fazer" Style="{StaticResource LabelFrameCardStyle}"/>
+                        <CollectionView x:Name="CardParafazer">
+                            <!-- Template para itens -->
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Frame Style="{StaticResource CollectionViewFrameStyle}">
+                                        <StackLayout HorizontalOptions="FillAndExpand">
+                                            <Label Text="{Binding Titulo}" Style="{StaticResource CollectionViewFrameLabelStyle}"/>
+                                        </StackLayout>
+                                    </Frame>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </StackLayout>
+                </Frame>
+            </VerticalStackLayout>
+            
+        </HorizontalStackLayout>
+        <!-- <VerticalStackLayout
             Padding="30,0"
             Spacing="25">
-            <Image
-                Source="dotnet_bot.png"
-                HeightRequest="185"
-                Aspect="AspectFit"
-                SemanticProperties.Description="dot net bot in a race car number eight" />
 
-            <Label
-                Text="Hello, World!"
-                Style="{StaticResource Headline}"
-                SemanticProperties.HeadingLevel="Level1" />
-
-            <Button Text="Novo" Clicked="NewClicked" HorizontalOptions="End" />
+            <!-<Button Text="Novo" Clicked="NewClicked" HorizontalOptions="End" />
 
             <StackLayout>
                 <Grid Padding="5" BackgroundColor="LightBlue" RowDefinitions="Auto" ColumnDefinitions="0.1*, 0.3*, 0.3*, 0.2*, 0.2*">
@@ -42,19 +132,26 @@
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
                                     <Button Text="ver"
                                         Command="{Binding Path=BindingContext.NavigateToDetailsCommand, Source={x:Reference Name=TarefasCollectionTable}}"
                                         CommandParameter="{Binding .}"
                                         Grid.Row="0">
                                     </Button>
-
+                                     <Button Text="Alterar"
+                                        BackgroundColor="orange"
+                                        TextColor="white"
+                                        Command="{Binding Path=BindingContext.NavigateToChangeCommand, Source={x:Reference Name=TarefasCollectionTable}}"
+                                        CommandParameter="{Binding .}"
+                                        Grid.Row="1">
+                                    </Button>
                                     <Button Text="Excluir"
                                         BackgroundColor="Red"
                                         TextColor="white"
                                         Command="{Binding Path=BindingContext.DeleteCommand, Source={x:Reference Name=TarefasCollectionTable}}"
                                         CommandParameter="{Binding .}"
-                                        Grid.Row="1">
+                                        Grid.Row="2">
                                     </Button>
                                 </Grid>
                             </Grid>
@@ -63,7 +160,7 @@
                 </CollectionView>
 
             </StackLayout>
-        </VerticalStackLayout>
+        </VerticalStackLayout> -->
     </ScrollView>
 
 </ContentPage>

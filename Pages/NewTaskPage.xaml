@@ -15,19 +15,19 @@
                 SemanticProperties.HeadingLevel="Level1" />
 
             <StackLayout Padding="20">
-                <Entry x:Name="TituloEntry" Placeholder="Titulo" />
+                <Entry x:Name="TituloEntry" Text="{ Binding Titulo}" Placeholder="Titulo" />
 
-                <Picker x:Name="StatusPicker" Title="Selecione o status">
+                <Picker x:Name="StatusPicker" SelectedItem="{ Binding Status}">
                     <Picker.ItemsSource/>
                 </Picker>
 
-                <Picker x:Name="UsuarioPicker" Title="Selecione o usuário">
+                <Picker x:Name="UsuarioPicker" SelectedItem="{ Binding UsuarioId }" Title="Selecione o usuário">
                     <Picker.ItemDisplayBinding>
                         <Binding Path="Nome" />
                     </Picker.ItemDisplayBinding>
                 </Picker>
                 
-                <Editor x:Name="DescricaoEditor" Placeholder="Descrição" HeightRequest="100" AutoSize="TextChanges" />
+                <Editor x:Name="DescricaoEditor" Text="{ Binding Descricao}" Placeholder="Descrição" HeightRequest="100" AutoSize="TextChanges" />
 
                 <Button Text="Salvar" Clicked="OnSaveClicked" />
             </StackLayout>

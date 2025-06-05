@@ -9,6 +9,7 @@ public partial class MainPage : ContentPage
 {
 	DatabaseServico<Tarefa> _tarefaServico;
 	public ICommand NavigateToDetailsCommand { get; private set; }
+	public ICommand NavigateToChangeCommand { get; private set; }
 	public ICommand DeleteCommand { get; private set; }
 
 	public MainPage()
@@ -17,8 +18,9 @@ public partial class MainPage : ContentPage
 		_tarefaServico = new DatabaseServico<Tarefa>(Db.DB_PATH);
 
 		NavigateToDetailsCommand = new Command<Tarefa>(async (tarefa) => await NavigateToDetails(tarefa));
+		NavigateToChangeCommand = new Command<Tarefa>(async (tarefa) => await NavigateToChange(tarefa));
 		DeleteCommand = new Command<Tarefa>(ExecuteDeleteCommand);
-		TarefasCollectionTable.BindingContext = this;
+		//CardBacklog.BindingContext = this;
 
 		CarregarTarefas();
 	}
@@ -39,6 +41,11 @@ public partial class MainPage : ContentPage
 		}
 	}
 
+	private async Task NavigateToChange(Tarefa tarefa)
+	{
+		await Navigation.PushAsync(new NewTaskPage(tarefa));
+	}
+
 	private async Task NavigateToDetails(Tarefa tarefa)
 	{
 		await Navigation.PushAsync(new TaskDetailsPage(tarefa));
@@ -46,8 +53,9 @@ public partial class MainPage : ContentPage
 
 	private async void CarregarTarefas()
 	{
-		var tarefas = await _tarefaServico.TodosAsync();
-		TarefasCollectionTable.ItemsSource = tarefas;
+		CardBacklog.ItemsSource = await _tarefaServico.Query().Where(t => t.Status == Enums.Status.Backlog).ToArrayAsync();
+		CardAnalise.ItemsSource = await _tarefaServico.Query().Where(t => t.Status == Enums.Status.Analise).ToArrayAsync();
+		CardParafazer.ItemsSource = await _tarefaServico.Query().Where(t => t.Status == Enums.Status.ParaFazer).ToArrayAsync();
 	}
 
 	private async void NewClicked(object sender, EventArgs e)

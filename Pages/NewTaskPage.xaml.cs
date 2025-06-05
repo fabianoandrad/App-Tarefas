@@ -15,21 +15,40 @@ public partial class NewTaskPage : ContentPage
 		InitializeComponent();
 		_tarefaServico = new DatabaseServico<Tarefa>(Db.DB_PATH);
 
-		Tarefa = tarefa;
-		BindingContext = this;
+		Tarefa = tarefa ?? new Tarefa();
+		BindingContext = tarefa;
 
 		StatusPicker.ItemsSource = Enum.GetValues(typeof(Status)).Cast<Status>().ToList();
 		UsuarioPicker.ItemsSource = UsuarioServico.Instancia().Todos();
+
+		StatusPicker.SelectedItem = Tarefa.Status ?? Status.Backlog;
+		UsuarioPicker.SelectedItem = Tarefa.Usuario;
 	}
 
 	private async void OnSaveClicked(object sender, EventArgs e)
 	{
-		if (Tarefa == null) Tarefa = new Tarefa();
-		
+		if (string.IsNullOrEmpty(TituloEntry.Text))
+		{
+			await DisplayAlert("Atenção", "O título não pode ser vazio!", "OK");
+			TituloEntry.Focus();
+			return;
+		}
+
 		Tarefa.Titulo = TituloEntry.Text;
 		Tarefa.Descricao = DescricaoEditor.Text;
-		Tarefa.Status = (Status)StatusPicker.SelectedItem;
-		Tarefa.UsuarioId = ((Usuario)UsuarioPicker.SelectedItem).Id;
+		if (StatusPicker.SelectedItem != null)
+		{
+			Tarefa.Status = (Status)StatusPicker.SelectedItem;
+		}
+		else
+		{
+			Tarefa.Status = Status.Backlog;
+		}
+
+		if (UsuarioPicker.SelectedItem != null)
+		{
+			Tarefa.UsuarioId = ((Usuario)UsuarioPicker.SelectedItem).Id;
+		}
 
 		if (Tarefa.Id == 0)
 		{

@@ -13,15 +13,27 @@ public class Tarefa
     public DateTime DataCriacao { get; set; }
     public DateTime DataAtualizacao { get; set; }
     public int UsuarioId { get; set; }
+
+    [Ignore]
+    public Usuario Usuario
+    {
+        get
+        {
+            if (this.UsuarioId == 0) return null;
+            return UsuarioServico.Instancia().Todos().Find(u => u.Id == this.UsuarioId);
+        }
+    }
+
+    [Ignore]
     public string NomeUsuario
     {
         get
         {
-            if (this.UsuarioId == 0) return "Sem usuário";
-            return UsuarioServico.Instancia().Todos().Find(u => u.Id == this.UsuarioId).Nome;
+            if (this.Usuario == null) return "Sem usuário";
+            return Usuario?.Nome;
         }
     }
-    public Status Status { get; set; }
+    public Status? Status { get; set; }
 
     public Tarefa()
     {
