@@ -10,19 +10,22 @@ public partial class NewTaskPage : ContentPage
 {
 	DatabaseServico<Tarefa> _tarefaServico;
 	public Tarefa Tarefa { get; set; }
-	public NewTaskPage(Tarefa tarefa = null)
+	public NewTaskPage(Tarefa tarefa)
 	{
 		InitializeComponent();
 		_tarefaServico = new DatabaseServico<Tarefa>(Db.DB_PATH);
 
-		Tarefa = tarefa ?? new Tarefa();
+		var status = tarefa.Status;
+		var usuario = tarefa.Usuario;
+
+		Tarefa = tarefa;
 		BindingContext = tarefa;
 
 		StatusPicker.ItemsSource = Enum.GetValues(typeof(Status)).Cast<Status>().ToList();
 		UsuarioPicker.ItemsSource = UsuarioServico.Instancia().Todos();
 
-		StatusPicker.SelectedItem = Tarefa.Status ?? Status.Backlog;
-		UsuarioPicker.SelectedItem = Tarefa.Usuario;
+		StatusPicker.SelectedItem = status;
+		UsuarioPicker.SelectedItem = usuario;
 	}
 
 	private async void OnSaveClicked(object sender, EventArgs e)

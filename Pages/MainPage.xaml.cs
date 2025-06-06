@@ -9,8 +9,6 @@ public partial class MainPage : ContentPage
 {
 	DatabaseServico<Tarefa> _tarefaServico;
 	public ICommand NavigateToDetailsCommand { get; private set; }
-	public ICommand NavigateToChangeCommand { get; private set; }
-	public ICommand DeleteCommand { get; private set; }
 
 	public MainPage()
 	{
@@ -18,8 +16,7 @@ public partial class MainPage : ContentPage
 		_tarefaServico = new DatabaseServico<Tarefa>(Db.DB_PATH);
 
 		NavigateToDetailsCommand = new Command<Tarefa>(async (tarefa) => await NavigateToDetails(tarefa));
-		NavigateToChangeCommand = new Command<Tarefa>(async (tarefa) => await NavigateToChange(tarefa));
-		DeleteCommand = new Command<Tarefa>(ExecuteDeleteCommand);
+
 		//CardBacklog.BindingContext = this;
 
 		CarregarTarefas();
@@ -31,21 +28,6 @@ public partial class MainPage : ContentPage
 		CarregarTarefas();
     }
 
-	private async void ExecuteDeleteCommand(Tarefa tarefa)
-	{
-		bool confirm = await DisplayAlert("Confirmação", "Deseja excuir esta tarefa?", "Sim", "Não");
-		if (confirm)
-		{
-			await _tarefaServico.DeleteAsync(tarefa);
-			CarregarTarefas();
-		}
-	}
-
-	private async Task NavigateToChange(Tarefa tarefa)
-	{
-		await Navigation.PushAsync(new NewTaskPage(tarefa));
-	}
-
 	private async Task NavigateToDetails(Tarefa tarefa)
 	{
 		await Navigation.PushAsync(new TaskDetailsPage(tarefa));
@@ -56,11 +38,18 @@ public partial class MainPage : ContentPage
 		CardBacklog.ItemsSource = await _tarefaServico.Query().Where(t => t.Status == Enums.Status.Backlog).ToArrayAsync();
 		CardAnalise.ItemsSource = await _tarefaServico.Query().Where(t => t.Status == Enums.Status.Analise).ToArrayAsync();
 		CardParafazer.ItemsSource = await _tarefaServico.Query().Where(t => t.Status == Enums.Status.ParaFazer).ToArrayAsync();
+		CardDesenvolvimento.ItemsSource = await _tarefaServico.Query().Where(t => t.Status == Enums.Status.Desenvolvimento).ToArrayAsync();
+		CardFeito.ItemsSource = await _tarefaServico.Query().Where(t => t.Status == Enums.Status.Feito).ToArrayAsync();
 	}
 
-	private async void NewClicked(object sender, EventArgs e)
+	private async void NewItemClicked(object sender, EventArgs e)
 	{
-		await Navigation.PushAsync(new NewTaskPage());
+		var btn = sender as Button;
+		if (sender != null) {
+			var status = (Enums.Status)btn.CommandParameter;
+			await Navigation.PushAsync(new NewTaskPage(new Tarefa(){Status = status}));
+			
+		}
 	}
 
 	
