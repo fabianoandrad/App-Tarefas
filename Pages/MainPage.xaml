@@ -27,7 +27,7 @@
             <Style x:Key="CollectionViewFrameStyle" TargetType="Frame">
                 <Setter Property="BackgroundColor" Value="White" />
                 <Setter Property="Padding" Value="10" />
-                <Setter Property="Padding" Value="10" />
+                <Setter Property="Margin" Value="5" />
                 <Setter Property="CornerRadius" Value="10" />
                 <Setter Property="HorizontalOptions" Value="FillAndExpand" />
                 <Setter Property="HasShadow" Value="True" />
