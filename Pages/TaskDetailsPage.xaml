@@ -66,13 +66,73 @@
                             Margin="5,0,0,0"/>
                     </Grid>
 
+                    <Button Text="Tirar foto"
+                            BackgroundColor="#6495ED"
+                            Clicked="TirarFotoClicked"
+                            HorizontalOptions="FillAndExpand"
+                            VerticalOptions="End"
+                            Margin="0,10,0,0"/>
+
+                    <Button x:Name="LocalizacaoButton"
+                            Text="Pegar coordenadas do GPS"
+                            BackgroundColor="#FF009494"
+                            Clicked="GPSClicked"
+                            HorizontalOptions="FillAndExpand"
+                            VerticalOptions="End"
+                            Margin="0,10,0,0"/>
+
                     <BoxView HeightRequest="1" BackgroundColor="#CCCCCC" Margin="0,5"/>
                     
                     <Button Text="Voltar" Clicked="GoBackClicked" />
                 </StackLayout>
             </Frame>
+
+            <Frame x:Name="FotosFrame" CornerRadius="10" Padding="15" HasShadow="True" Margin="0,20,0,0" BackgroundColor="#ffffff">
+                <StackLayout Spacing="5">
+                    <Label Text="Fotos" FontAttributes="Bold" FontSize="Medium" TextColor="Black"/>
+
+                    <CollectionView x:Name="FotosCollection">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout Padding="2" Margin="0,20,0,0">
+                                    <Image Source="{Binding Arquivo}"
+                                        Aspect="AspectFill"
+                                        HorizontalOptions="FillAndExpand"
+                                        />
+                                </StackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </StackLayout>
+            </Frame>
+
+            <Frame x:Name="LocalizacaoFrame" CornerRadius="10" Padding="15" HasShadow="True" Margin="0,20,0,0">
+                <StackLayout Padding="5">
+                    <Label Text="Localização" FontAttributes="Bold" FontSize="Medium"/>
+
+                    <CollectionView x:Name="LocalizacaoCollection">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout Padding="2" Margin="0,20,0,0">
+                                    <Label x:Name="LabelLinkGoogleMaps" FontAttributes="Italic">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="LabelLinkGoogleMaps_Tapped"/>
+                                        </Label.GestureRecognizers>
+                                        <Label.Text>
+                                            <MultiBinding StringFormat="Abrir mapa - http://maps.google.com/?q={0},{1}">
+                                                <Binding Path="Latitude"/>
+                                                <Binding Path="Longitude"/>
+                                            </MultiBinding>
+                                        </Label.Text>
+                                    </Label>
+                                </StackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </StackLayout>
+            </Frame>
                 
-             <Frame CornerRadius="10" Padding="15" HasShadow="True" BackgroundColor="#ffffff">
+            <Frame CornerRadius="10" Padding="15" HasShadow="True" BackgroundColor="#ffffff">
                 <StackLayout Spacing="10">
                     <Label Text="Comentários" FontAttributes="Bold" FontSize="Medium" TextColor="Black"/>
                     
