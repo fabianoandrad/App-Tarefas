@@ -8,66 +8,97 @@
         <VerticalStackLayout
             Padding="30,0"
             Spacing="25">
+            <Frame CornerRadius="10" Padding="15" HasShadow="True" BackgroundColor="#ffffff">
+                <StackLayout Padding="20">
+                    <StackLayout Orientation="Horizontal" Margin="0,0,0,5">
+                        <Label Text="Titulo:" FontAttributes="Bold" TextColor="Black" />
+                        <Label x:Name="LabelTitulo" Text="{Binding Tarefa.Titulo}" Margin="10,0,0,0" TextColor="Black"/>
+                    </StackLayout>
 
-            <StackLayout Orientation="Horizontal" Margin="0,0,0,5">
-                <Label Text="Titulo:" FontAttributes="Bold" />
-                <Label x:Name="LabelTitulo" Text="{Binding Tarefa.Titulo}" Margin="10,0,0,0"/>
-            </StackLayout>
+                    <StackLayout Orientation="Horizontal" Margin="0,0,0,2">
+                        <Label Text="Usuário:" FontAttributes="Bold"  TextColor="Black"/>
+                        <Label x:Name="LabelNomeUsuario" Text="{Binding Tarefa.NomeUsuario}" Margin="10,0,0,0" TextColor="Black"/>
+                    </StackLayout>
 
-            <StackLayout Orientation="Horizontal" Margin="0,0,0,2">
-                <Label Text="Usuário:" FontAttributes="Bold" />
-                <Label x:Name="LabelNomeUsuario" Text="{Binding Tarefa.NomeUsuario}" Margin="10,0,0,0"/>
-            </StackLayout>
+                    <StackLayout Orientation="Horizontal" Margin="0,0,0,2">
+                        <Label Text="Criado em:" FontAttributes="Bold"  TextColor="Black"/>
+                        <Label x:Name="LabelDataCriacao" Text="{Binding Tarefa.DataCriacao}" Margin="10,0,0,0" TextColor="Black"/>
+                    </StackLayout>
 
-            <StackLayout Orientation="Horizontal" Margin="0,0,0,2">
-                <Label Text="Criado em:" FontAttributes="Bold" />
-                <Label x:Name="LabelDataCriacao" Text="{Binding Tarefa.DataCriacao}" Margin="10,0,0,0"/>
-            </StackLayout>
+                    <StackLayout Orientation="Horizontal" Margin="0,0,0,2">
+                        <Label Text="Atualizado em:" FontAttributes="Bold"  TextColor="Black"/>
+                        <Label x:Name="LabelDataAtualizacao" Text="{Binding Tarefa.DataAtualizacao}" Margin="10,0,0,0" TextColor="Black"/>
+                    </StackLayout>
 
-            <StackLayout Orientation="Horizontal" Margin="0,0,0,2">
-                <Label Text="Atualizado em:" FontAttributes="Bold" />
-                <Label x:Name="LabelDataAtualizacao" Text="{Binding Tarefa.DataAtualizacao}" Margin="10,0,0,0"/>
-            </StackLayout>
+                    <StackLayout Orientation="Horizontal" Margin="0,0,0,2">
+                        <Label Text="Status:" FontAttributes="Bold" TextColor="Black"/>
+                        <Label x:Name="LabelStatus" Text="{Binding Tarefa.Status}" Margin="10,0,0,0" TextColor="Black"/>
+                    </StackLayout>
 
-            <StackLayout Orientation="Horizontal" Margin="0,0,0,2">
-                <Label Text="Status:" FontAttributes="Bold" />
-                <Label x:Name="LabelStatus" Text="{Binding Tarefa.Status}" Margin="10,0,0,0"/>
-            </StackLayout>
+                    <StackLayout Orientation="Horizontal" Margin="0,0,0,2">
+                        <Label Text="Descrição:" FontAttributes="Bold"  TextColor="Black"/>
+                        <Label x:Name="LabelDescricao" Text="{Binding Tarefa.Descricao}" Margin="10,0,0,0" TextColor="Black"/>
+                    </StackLayout>
 
-            <StackLayout Orientation="Horizontal" Margin="0,0,0,2">
-                <Label Text="Descrição:" FontAttributes="Bold" />
-                <Label x:Name="LabelDescricao" Text="{Binding Tarefa.Descricao}" Margin="10,0,0,0"/>
-            </StackLayout>
+                    <BoxView HeightRequest="1" BackgroundColor="#CCCCCC" Margin="0,5"/>
+                    
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
-            <BoxView HeightRequest="1" BackgroundColor="#CCCCCC" Margin="0,5"/>
-            
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+                        <Button Grid.Row="0" Grid.Column="0"
+                            Text="Alterar"
+                            BackgroundColor="#FFCC00"
+                            TextColor="Black"
+                            Clicked="editClicked"
+                            Margin="0,0,0,0"/>
 
-                <Button Grid.Row="0" Grid.Column="0"
-                    Text="Alterar"
-                    BackgroundColor="#FFCC00"
-                    TextColor="Black"
-                    Clicked="editClicked"
-                    Margin="0,0,0,0"/>
+                        <Button Grid.Row="0" Grid.Column="1"
+                            Text="Excluir"
+                            BackgroundColor="red"
+                            TextColor="Black"
+                            Clicked="deleteClicked"
+                            Margin="5,0,0,0"/>
+                    </Grid>
 
-                <Button Grid.Row="0" Grid.Column="1"
-                    Text="Excluir"
-                    BackgroundColor="red"
-                    TextColor="Black"
-                    Clicked="deleteClicked"
-                    Margin="5,0,0,0"/>
-            </Grid>
+                    <BoxView HeightRequest="1" BackgroundColor="#CCCCCC" Margin="0,5"/>
+                    
+                    <Button Text="Voltar" Clicked="GoBackClicked" />
+                </StackLayout>
+            </Frame>
+                
+             <Frame CornerRadius="10" Padding="15" HasShadow="True" BackgroundColor="#ffffff">
+                <StackLayout Spacing="10">
+                    <Label Text="Comentários" FontAttributes="Bold" FontSize="Medium" TextColor="Black"/>
+                    
+                    <Editor x:Name="NovoComentarioEditor" Placeholder="Adicione um comentario..." HeightRequest="50" TextColor="Black"/>
 
-            <BoxView HeightRequest="1" BackgroundColor="#CCCCCC" Margin="0,5"/>
-            
-            <Button Text="Voltar" Clicked="GoBackClicked" />
+                    <Picker x:Name="UsuarioPicker" Title="Selecione o usuário" ItemDisplayBinding="{Binding Nome}" TextColor="Gray">
+
+                    </Picker>
+
+                    <Button Text="Adicionar Comentário" Clicked="AdicionarComentarioClicked"/>
+
+                    <CollectionView x:Name="ComentariosCollection">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout Padding="10" BackgroundColor="#f0f0f0">
+                                    <Label Text="{Binding Texto}" FontAttributes="Italic" TextColor="Black"/>
+                                    <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                                        <Label Text="{Binding NomeUsuario}" HorizontalOptions="Start" FontAttributes="Bold" TextColor="Black"/>
+                                        <Label Text="{Binding Data, StringFormat='{0:dd/MM/yyyy HH:mm}'}" HorizontalOptions="EndAndExpand" TextColor="Black"/>
+                                    </StackLayout>
+                                </StackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </StackLayout>
+            </Frame>
         </VerticalStackLayout>
     </ScrollView>
 

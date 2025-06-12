@@ -8,14 +8,16 @@ namespace Tarefas.Pages;
 public partial class TaskDetailsPage : ContentPage
 {
 	public Tarefa Tarefa { get; set; }
-	DatabaseServico<Tarefa> _databaseServico;
+	DatabaseServico<Tarefa> _tarefaServico;
+	DatabaseServico<Comentario> _comentarioServico;
 	public TaskDetailsPage(Tarefa tarefa)
 	{
 		InitializeComponent();
 
 		Tarefa = tarefa;
 		BindingContext = this;
-		_databaseServico = new DatabaseServico<Tarefa>(Db.DB_PATH);
+		_tarefaServico = new DatabaseServico<Tarefa>(Db.DB_PATH);
+		_comentarioServico = new DatabaseServico<Comentario>(Db.DB_PATH);
 	}
 
 	protected override void OnAppearing()
@@ -27,7 +29,38 @@ public partial class TaskDetailsPage : ContentPage
 		LabelDataAtualizacao.Text = Tarefa.DataAtualizacao.ToString();
 		LabelStatus.Text = Tarefa.Status.ToString();
 		LabelDescricao.Text = Tarefa.Descricao;
+		UsuarioPicker.ItemsSource = UsuarioServico.Instancia().Todos();
+
+		CarregarComentarios();
     }
+
+	private async void CarregarComentarios()
+	{
+		ComentariosCollection.ItemsSource = await _comentarioServico.Query().Where(c => c.TarefaId == Tarefa.Id).ToListAsync();
+	}
+
+	private async void AdicionarComentarioClicked(object sender, EventArgs e)
+	{
+		if (string.IsNullOrEmpty(NovoComentarioEditor.Text) || UsuarioPicker.SelectedIndex == -1)
+		{
+			await DisplayAlert("Erro", "Digite o comentario e selecione o usuario", "Fechar");
+			return;
+		}
+
+		var usuario = (Usuario)UsuarioPicker.SelectedItem;
+
+		await _comentarioServico.IncluirAsync(new Comentario
+		{
+			UsuarioId = usuario.Id,
+			TarefaId = Tarefa.Id,
+			Texto = NovoComentarioEditor.Text
+		});
+
+		NovoComentarioEditor.Text = string.Empty;
+		UsuarioPicker.SelectedIndex = -1;
+
+		CarregarComentarios();
+	}
 
 	private async void editClicked(object sender, EventArgs e)
 	{
@@ -39,7 +72,7 @@ public partial class TaskDetailsPage : ContentPage
 		bool confirm = await DisplayAlert("Confirmação", "Deseja excluir esta tarefa?", "Sim", "Não");
 		if (confirm)
 		{
-			await _databaseServico.DeleteAsync(Tarefa);
+			await _tarefaServico.DeleteAsync(Tarefa);
 			await Navigation.PopAsync();
 		}
 	}

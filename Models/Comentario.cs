@@ -4,20 +4,18 @@ using Tarefas.Servicos;
 
 namespace Tarefas.Models;
 
-public class Tarefa
+public class Comentario
 {
-        public Tarefa()
+        public Comentario()
     {
-        this.DataCriacao = DateTime.Now;
-        this.DataAtualizacao = DateTime.Now;
+        this.Data = DateTime.Now;
     }
-    
+
     [PrimaryKey, AutoIncrement]
     public int Id { get; set; }
-    public string Titulo { get; set; }
-    public string Descricao { get; set; }
-    public DateTime DataCriacao { get; set; }
-    public DateTime DataAtualizacao { get; set; }
+    public string Texto { get; set; }
+    public DateTime Data { get; set; }
+    public int TarefaId { get; set; }
     public int UsuarioId { get; set; }
 
     [Ignore]
@@ -39,5 +37,5 @@ public class Tarefa
             return Usuario?.Nome;
         }
     }
-    public Status? Status { get; set; }
+
 }
